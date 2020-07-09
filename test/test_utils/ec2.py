@@ -379,9 +379,9 @@ def execute_ec2_training_test_indocker(ecr_uri, test_cmd, region=DEFAULT_REGION,
     if executable == "bash":
         executable = os.path.join(os.sep, 'bin', 'bash')
     docker_cmd = "nvidia-docker" if "gpu" in ecr_uri else "docker"
-    container_test_local_dir = os.path.join("$HOME", "container_tests")
+    container_test_local_dir = os.path.join(os. getcwd(), "container_tests")
 
-    os.system(f"$(aws ecr get-login --no-include-email --region {region})")
+    #os.system(f"$(aws ecr get-login --no-include-email --region {region})")
 
     # Run training command
     os.system(
