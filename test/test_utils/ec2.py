@@ -385,7 +385,8 @@ def execute_ec2_training_test_indocker(ecr_uri, test_cmd, region=DEFAULT_REGION,
 
     # Run training command
     os.system(
-        f"{docker_cmd} run --name ec2_training_container -v {container_test_local_dir}:{os.path.join(os.sep, 'test')}"
+        f"[ ! $(docker ps -a | grep ec2_training_container) ] &&"
+        f" {docker_cmd} run --name ec2_training_container -v {container_test_local_dir}:{os.path.join(os.sep, 'test')}"
         f" -itd {ecr_uri}"
     )
     return os.system(
