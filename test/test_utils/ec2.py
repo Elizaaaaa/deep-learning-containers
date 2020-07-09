@@ -8,7 +8,7 @@ from botocore.config import Config
 
 from . import DEFAULT_REGION, UBUNTU_16_BASE_DLAMI, LOGGER
 
-EC2_INSTANCE_ROLE_NAME = "ec2TestInstanceRole"
+EC2_INSTANCE_ROLE_NAME = "tf-cicd-codebuild-role"
 
 
 def get_ec2_instance_type(default, processor, enable_p3dn=False):
