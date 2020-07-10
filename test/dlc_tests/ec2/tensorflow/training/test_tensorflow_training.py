@@ -20,25 +20,25 @@ TF_TENSORBOARD_CMD = os.path.join(CONTAINER_TESTS_PREFIX, "testTensorBoard")
 TF_EC2_GPU_INSTANCE_TYPE = get_ec2_instance_type(default="p2.xlarge", processor="gpu")
 TF_EC2_CPU_INSTANCE_TYPE = get_ec2_instance_type(default="c5.4xlarge", processor="cpu")
 
-@pytest.mark.skip_cpu
-def test_tensorflow_standalone_gpu(tensorflow_training, gpu_only):
-    test_script = TF1_STANDALONE_CMD if is_tf1(tensorflow_training) else TF2_STANDALONE_CMD
-    execute_ec2_training_test_indocker(tensorflow_training, test_script)
-
-@pytest.mark.skip_gpu
-def test_tensorflow_standalone_cpu(tensorflow_training, cpu_only):
-    test_script = TF1_STANDALONE_CMD if is_tf1(tensorflow_training) else TF2_STANDALONE_CMD
-    execute_ec2_training_test_indocker(tensorflow_training, test_script)
-
 # @pytest.mark.skip_cpu
-# def test_tensorflow_train_mnist_gpu(tensorflow_training, gpu_only):
-#     execute_ec2_training_test_indocker(tensorflow_training, TF_MNIST_CMD)
+# def test_tensorflow_standalone_gpu(tensorflow_training, gpu_only):
+#     test_script = TF1_STANDALONE_CMD if is_tf1(tensorflow_training) else TF2_STANDALONE_CMD
+#     execute_ec2_training_test_indocker(tensorflow_training, test_script)
 
 # @pytest.mark.skip_gpu
-# # TODO: Change this back TF_EC2_CPU_INSTANCE_TYPE. Currently this test times out on c4.8x, m4.16x and t2.2x,
-# #       though passes on all three when run manually. For now we are pinning to c5.18 until we can resolve the issue.
-# def test_tensorflow_train_mnist_cpu(tensorflow_training, cpu_only):
-#     execute_ec2_training_test_indocker(tensorflow_training, TF_MNIST_CMD)
+# def test_tensorflow_standalone_cpu(tensorflow_training, cpu_only):
+#     test_script = TF1_STANDALONE_CMD if is_tf1(tensorflow_training) else TF2_STANDALONE_CMD
+#     execute_ec2_training_test_indocker(tensorflow_training, test_script)
+
+@pytest.mark.skip_cpu
+def test_tensorflow_train_mnist_gpu(tensorflow_training, gpu_only):
+    execute_ec2_training_test_indocker(tensorflow_training, TF_MNIST_CMD)
+
+@pytest.mark.skip_gpu
+# TODO: Change this back TF_EC2_CPU_INSTANCE_TYPE. Currently this test times out on c4.8x, m4.16x and t2.2x,
+#       though passes on all three when run manually. For now we are pinning to c5.18 until we can resolve the issue.
+def test_tensorflow_train_mnist_cpu(tensorflow_training, cpu_only):
+    execute_ec2_training_test_indocker(tensorflow_training, TF_MNIST_CMD)
 
 # @pytest.mark.skip_cpu
 # def test_tensorflow_with_horovod_gpu(tensorflow_training, gpu_only):
