@@ -176,6 +176,13 @@ def ec2_connection(request, ec2_instance, ec2_key_name, region):
 
     return conn
 
+def pytest_addoption(parser):
+    parser.addoption('--processor', choices=['gpu', 'cpu'], default='cpu')
+
+@pytest.fixture(scope='session', name='processor')
+def fixture_processor(request):
+    return request.config.getoption('--processor')
+
 @pytest.fixture(autouse=True)
 def skip_by_device_type(request, processor):
     is_gpu = (processor == 'gpu')
