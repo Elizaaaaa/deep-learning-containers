@@ -175,20 +175,7 @@ def ec2_connection(request, ec2_instance, ec2_key_name, region):
         test_utils.login_to_ecr_registry(conn, public_registry, region)
 
     return conn
-
-def pytest_addoption(parser):
-    parser.addoption('--processor', choices=['gpu', 'cpu'], default='cpu')
-
-@pytest.fixture(scope='session', name='processor')
-def fixture_processor(request):
-    return request.config.getoption('--processor')
-
-@pytest.fixture(autouse=True)
-def skip_by_device_type(request, processor):
-    is_gpu = (processor == 'gpu')
-    if (request.node.get_closest_marker('skip_gpu') and is_gpu) or \
-            (request.node.get_closest_marker('skip_cpu') and not is_gpu):
-        pytest.skip('Skipping because running on \'{}\' instance'.format(processor))
+    
 
 @pytest.fixture(scope="session")
 def dlc_images(request):
