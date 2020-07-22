@@ -54,6 +54,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--generate-coverage-doc", action="store_true", default=False, help="Generate a test coverage doc",
     )
+    parser.addoption('--processor', choices=['gpu', 'cpu'], default='cpu')
 
 
 @pytest.fixture(scope="function")
@@ -202,6 +203,11 @@ def ec2_connection(request, ec2_instance, ec2_key_name, ec2_instance_type, regio
         test_utils.login_to_ecr_registry(conn, public_registry, region)
 
     return conn
+
+
+@pytest.fixture(scope='session', name='processor')
+def fixture_processor(request):
+    return request.config.getoption('--processor')
 
 
 @pytest.fixture(scope="session")
