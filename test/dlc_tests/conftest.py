@@ -54,8 +54,6 @@ def pytest_addoption(parser):
     parser.addoption(
         "--generate-coverage-doc", action="store_true", default=False, help="Generate a test coverage doc",
     )
-    parser.addoption('--processor', choices=['gpu', 'cpu'], default='cpu')
-
 
 @pytest.fixture(scope="function")
 def num_nodes(request):
