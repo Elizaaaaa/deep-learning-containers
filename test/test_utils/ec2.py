@@ -379,21 +379,10 @@ def execute_ec2_training_test_indocker(ecr_uri, test_cmd, region=DEFAULT_REGION,
     if executable == "bash":
         executable = os.path.join(os.sep, 'bin', 'bash')
     #docker_cmd = "nvidia-docker" if "gpu" in ecr_uri else "docker"
-    docker_cmd = "docker"
     container_test_local_dir = os.path.join(os. getcwd(), "container_tests")
-
-    #os.system(f"$(aws ecr get-login --no-include-email --region {region})")
-
-    # Run training command
-    os.system(
-        f"[ ! $(docker ps -a | grep ec2_training_container) ] &&"
-        f" {docker_cmd} run --name ec2_training_container -v {container_test_local_dir}:{os.path.join(os.sep, 'test')}"
-        f" -itd {ecr_uri}"
-    )
-    return os.system(
-        f"timeout 3000 {docker_cmd} exec --user root ec2_training_container {executable} -c '{test_cmd}'"
-    )
-
+    test_dir = os.path.join(os.sep, 'test')
+    os.system("cp -r {container_test_local_dir} {test_dir}")
+    os.system("{executable} -c '{test_cmd}'")
 
 def execute_ec2_inference_test(connection, ecr_uri, test_cmd, region=DEFAULT_REGION):
     docker_cmd = "nvidia-docker" if "gpu" in ecr_uri else "docker"

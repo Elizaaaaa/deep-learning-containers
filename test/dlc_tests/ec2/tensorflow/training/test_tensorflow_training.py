@@ -50,7 +50,7 @@ def test_tensorflow_train_mnist_cpu(tensorflow_training, cpu_only):
 
 def test_tensorflow_with_horovod_gpu(tensorflow_training, gpu_only):
     test_script = TF1_HVD_CMD if is_tf1(tensorflow_training) else TF2_HVD_CMD
-    execute_ec2_training_test_indocker(tensorflow_training, test_script, large_shm=True)
+    execute_ec2_training_test_indocker(tensorflow_training, test_script)
 
 
 # TODO: Change this back TF_EC2_CPU_INSTANCE_TYPE. Currently this test times out on c4.8x, m4.16x and t2.2x,
